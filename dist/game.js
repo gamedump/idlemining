@@ -2940,7 +2940,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   var drillPrice = 1e3;
   var minerTotal = miner * 0.5;
   var drillTotal = drill * 2;
-  var coalPerTick = 0;
+  var coalPerTick = minerTotal + drillTotal;
   debug.log("Coal: " + coalAmount + " / Money: " + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
   loadSprite("coal", "sprites/coal.png");
   loadSprite("exchange", "sprites/exchange.png");

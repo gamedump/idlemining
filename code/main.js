@@ -37,7 +37,7 @@ let drillPrice = 1000;
 let minerTotal = miner * 0.5
 let drillTotal = drill * 2
 
-let coalPerTick = 0
+let coalPerTick = minerTotal + drillTotal
 
 debug.log("Coal: " + coalAmount + " / Money: " + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
 
