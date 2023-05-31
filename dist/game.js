@@ -2941,7 +2941,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   var minerTotal = miner * 0.5;
   var drillTotal = drill * 2;
   var coalPerTick = minerTotal + drillTotal;
-  debug.log("Coal: " + coalAmount + " / Money: " + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
+  debug.log("Coal: " + coalAmount + " / $" + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
   loadSprite("coal", "sprites/coal.png");
   loadSprite("exchange", "sprites/exchange.png");
   loadSprite("increaseExchange", "sprites/increaseExchange.png");
@@ -2965,8 +2965,10 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   ]);
   button.onClick(() => {
     coalAmount += 1;
-    debug.log("Coal: " + coalAmount + " / Money: " + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
+    debug.log("Coal: " + coalAmount + " / $" + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
     play("click");
+  });
+  button.onHover(() => {
   });
   var exchange = add([
     sprite("exchange"),
@@ -2993,7 +2995,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       } else if (timesExchanged === 100) {
         exchangeValue /= 2;
       }
-      debug.log("Coal: " + coalAmount + " / Money: " + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
+      debug.log("Coal: " + coalAmount + " / $" + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
     }
   });
   var increaseExchange = add([
@@ -3010,9 +3012,9 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       money -= increaseExchangePrice;
       play("cash");
       increaseExchangePrice += 25;
-      debug.log("Coal: " + coalAmount + " / Money: " + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
+      debug.log("Coal: " + coalAmount + " / $" + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
     } else {
-      debug.log("Coal: " + coalAmount + " / Money: " + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
+      debug.log("Coal: " + coalAmount + " / $" + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
     }
   });
   if (money < 0) {
@@ -3023,7 +3025,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   var buyMiner = add([
     sprite("miner"),
     scale(1),
-    pos(1150, 100),
+    pos(1150, 110),
     origin("botleft"),
     area(),
     layer("game")
@@ -3032,16 +3034,17 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     if (money >= minerPrice) {
       miner += 1;
       money -= minerPrice;
+      minerTotal = miner * 0.5;
       play("cash");
-      debug.log("Coal: " + coalAmount + " / Money: " + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
+      debug.log("Coal: " + coalAmount + " / $" + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
     } else {
-      debug.log("Coal: " + coalAmount + " / Money: " + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
+      debug.log("Coal: " + coalAmount + " / $" + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
     }
   });
   var buyDrill = add([
     sprite("drill"),
     scale(0.6),
-    pos(1150, 200),
+    pos(1155, 200),
     origin("botleft"),
     area(),
     layer("game")
@@ -3050,20 +3053,21 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     if (money >= drillPrice) {
       drill += 1;
       money -= drillPrice;
+      drillTotal = drill * 2;
       play("cash");
-      debug.log("Coal: " + coalAmount + " / Money: " + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
+      debug.log("Coal: " + coalAmount + " / $" + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
     } else {
-      debug.log("Coal: " + coalAmount + " / Money: " + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
+      debug.log("Coal: " + coalAmount + " / $" + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
     }
   });
   setInterval(() => {
     coalPerTick = minerTotal + drillTotal;
     coalAmount += coalPerTick;
-    debug.log("Coal: " + coalAmount + " / Money: " + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
+    debug.log("Coal: " + coalAmount + " / $" + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
   }, 1e3);
   onUpdate(() => {
     coalPerTick = minerTotal + drillTotal;
-    debug.log("Coal: " + coalAmount + " / Money: " + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
+    debug.log("Coal: " + coalAmount + " / $" + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
   });
   add([
     rect(width(), 50),

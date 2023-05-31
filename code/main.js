@@ -39,7 +39,7 @@ let drillTotal = drill * 2
 
 let coalPerTick = minerTotal + drillTotal
 
-debug.log("Coal: " + coalAmount + " / Money: " + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
+debug.log("Coal: " + coalAmount + " / $" + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
 
 // sprite loader
 loadSprite("coal", "sprites/coal.png");
@@ -70,9 +70,13 @@ const button = add([
 
 button.onClick(() => {
   coalAmount += 1;
-  debug.log("Coal: " + coalAmount + " / Money: " + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
+  debug.log("Coal: " + coalAmount + " / $" + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
   play("click")
 });
+
+button.onHover(() => {
+  
+})
 
 const exchange = add([
   sprite("exchange"),
@@ -100,7 +104,7 @@ exchange.onClick(() => {
     } else if (timesExchanged === 100) {
       exchangeValue /= 2
     }
-    debug.log("Coal: " + coalAmount + " / Money: " + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
+    debug.log("Coal: " + coalAmount + " / $" + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
   }
 });
 
@@ -119,9 +123,9 @@ increaseExchange.onClick(() => {
     money -= increaseExchangePrice;
     play("cash")
     increaseExchangePrice += 25;
-    debug.log("Coal: " + coalAmount + " / Money: " + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
+    debug.log("Coal: " + coalAmount + " / $" + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
   } else {
-    debug.log("Coal: " + coalAmount + " / Money: " + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
+    debug.log("Coal: " + coalAmount + " / $" + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
   }
 });
 
@@ -134,7 +138,7 @@ if (money < 0) {
 const buyMiner = add([
   sprite("miner"),
   scale(1),
-  pos(1150, 100),
+  pos(1150, 110),
   origin("botleft"),
   area(),
   layer("game")
@@ -142,19 +146,20 @@ const buyMiner = add([
 
 buyMiner.onClick(() => {
   if (money >= minerPrice) {
-    miner += 1
-    money -= minerPrice
+    miner += 1;
+    money -= minerPrice;
+    minerTotal = miner * 0.5;
     play("cash")
-    debug.log("Coal: " + coalAmount + " / Money: " + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
+    debug.log("Coal: " + coalAmount + " / $" + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
   } else {
-    debug.log("Coal: " + coalAmount + " / Money: " + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
+    debug.log("Coal: " + coalAmount + " / $" + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
   }
 });
 
 const buyDrill = add([
   sprite("drill"),
   scale(0.6),
-  pos(1150, 200),
+  pos(1155, 200),
   origin("botleft"),
   area(),
   layer("game")
@@ -164,22 +169,23 @@ buyDrill.onClick(() => {
   if (money >= drillPrice) {
     drill += 1
     money -= drillPrice
+    drillTotal = drill * 2
     play("cash")
-    debug.log("Coal: " + coalAmount + " / Money: " + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
+    debug.log("Coal: " + coalAmount + " / $" + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
   } else {
-    debug.log("Coal: " + coalAmount + " / Money: " + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
+    debug.log("Coal: " + coalAmount + " / $" + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
   }
 });
 
 setInterval(() => {
   coalPerTick = minerTotal + drillTotal
   coalAmount += coalPerTick;
-  debug.log("Coal: " + coalAmount + " / Money: " + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
+  debug.log("Coal: " + coalAmount + " / $" + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
 }, 1000);
 
 onUpdate(() => {
   coalPerTick = minerTotal + drillTotal
-  debug.log("Coal: " + coalAmount + " / Money: " + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
+  debug.log("Coal: " + coalAmount + " / $" + money + " / Value: " + exchangeValue + " / CPS: " + coalPerTick);
 })
 
 add([
